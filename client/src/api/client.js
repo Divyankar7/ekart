@@ -5,8 +5,13 @@ import axios from 'axios';
  * All requests go through /api — Vite's dev proxy forwards them to
  * http://localhost:5000, so no CORS issues during development.
  */
+const rawBaseURL = import.meta.env.VITE_API_URL || 'https://ekart-07yj.onrender.com';
+const baseURL = rawBaseURL.endsWith('/api')
+  ? rawBaseURL
+  : `${rawBaseURL.replace(/\/$/, '')}/api`;
+
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' },
 });
